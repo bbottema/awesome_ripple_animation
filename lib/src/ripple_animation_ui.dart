@@ -2,20 +2,23 @@ import 'dart:async';
 
 import 'package:awesome_ripple_animation/src/ripple_model.dart';
 import 'package:flutter/material.dart';
+
 class RippleAnimation extends StatefulWidget {
-   RippleAnimation({
+  RippleAnimation({
     Key? key,
-   required this.child,
-   required this.minRadius,
+    required this.child,
+    required this.size,
+    required this.minRadius,
     this.color= Colors.teal,
     this.repeat=false,
     this.delay=const Duration(milliseconds: 0),
     this.duration=const Duration(milliseconds: 2300),
     this.ripplesCount=60,
-
   }) : super(key: key);
+
   final Widget child;
-   Duration delay;
+  final Size size;
+  Duration delay;
   final double minRadius;
   Color color;
   final int ripplesCount;
@@ -37,14 +40,16 @@ class _RippleAnimationState extends State<RippleAnimation> with TickerProviderSt
   AnimationController ? animationController;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomPaint(
+    return SizedBox(
+      width: widget.size.width,
+      height: widget.size.height,
+      child: CustomPaint(
         painter: AnimatedCircle(
-          animationController,
-          minRadius: radius,
-          wavesCount: rippleCount +2 ,
-          color: color,
-          key: UniqueKey()
+            animationController,
+            minRadius: radius,
+            wavesCount: rippleCount +2,
+            color: color,
+            key: UniqueKey()
         ),
         child: child,
       )
